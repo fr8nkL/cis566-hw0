@@ -1,4 +1,4 @@
-import {vec4, mat4} from 'gl-matrix';
+import {vec4, mat4, vec2} from 'gl-matrix';
 import Drawable from './Drawable';
 import {gl} from '../../globals';
 
@@ -29,6 +29,7 @@ class ShaderProgram {
   unifModelInvTr: WebGLUniformLocation;
   unifViewProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
+  unifHw0: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -48,6 +49,7 @@ class ShaderProgram {
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
     this.unifColor      = gl.getUniformLocation(this.prog, "u_Color");
+    this.unifHw0      = gl.getUniformLocation(this.prog, "u_Hw0");
   }
 
   use() {
@@ -82,6 +84,13 @@ class ShaderProgram {
     this.use();
     if (this.unifColor !== -1) {
       gl.uniform4fv(this.unifColor, color);
+    }
+  }
+
+  setHw0(hw0: vec4) {
+    this.use();
+    if (this.unifHw0 !== -1) {
+      gl.uniform4fv(this.unifHw0, hw0);
     }
   }
 
